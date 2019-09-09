@@ -56,17 +56,17 @@ module.exports = function () {
         'QScrollArea',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle',
+        'QToolbarTitle'
       ],
 
       directives: [
-        'Ripple',
+        'Ripple'
       ],
 
       // Quasar plugins
       plugins: [
         'Loading',
-        'Notify',
+        'Notify'
       ],
     },
 

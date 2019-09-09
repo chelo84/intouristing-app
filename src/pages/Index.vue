@@ -25,6 +25,7 @@
             type="password"
             class="col-10"
             :label="$t('password')"
+            color="dark-purple"
             :rules="[val => !!val || 'Field is required']"
           />
         </div>
@@ -63,6 +64,7 @@ export default {
       this.$q.loading.show();
       console.log(`username == ${this.username}`);
       console.log(`password == ${this.password}`);
+      console.log(process.env);
       this.$q.loading.hide();
     },
   },
