@@ -35,36 +35,38 @@ module.exports = function () {
       // all: true, // --- includes everything; for dev only!
 
       components: [
-        'QLayout',
-        'QHeader',
-        'QDrawer',
-        'QPageContainer',
-        'QPage',
-        'QToolbar',
-        'QToolbarTitle',
-        'QBtn',
-        'QIcon',
-        'QList',
-        'QItem',
-        'QItemSection',
-        'QItemLabel',
         'QAvatar',
+        'QBtn',
+        'QCard',
+        'QCardActions',
+        'QCardSection',
+        'QDrawer',
+        'QForm',
+        'QHeader',
+        'QIcon',
+        'QImg',
+        'QInput',
+        'QItem',
+        'QItemLabel',
+        'QItemSection',
+        'QLayout',
+        'QList',
+        'QPage',
+        'QPageContainer',
         'QScrollArea',
         'QSeparator',
-        'QInput',
-        'QImg',
-        'QCard',
-        'QCardSection',
-        'QCardActions',
+        'QToolbar',
+        'QToolbarTitle'
       ],
 
       directives: [
-        'Ripple',
+        'Ripple'
       ],
 
       // Quasar plugins
       plugins: [
-        'Notify',
+        'Loading',
+        'Notify'
       ],
     },
 
