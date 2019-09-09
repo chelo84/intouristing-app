@@ -56,17 +56,17 @@ module.exports = function () {
         'QScrollArea',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle'
+        'QToolbarTitle',
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
       ],
 
       // Quasar plugins
       plugins: [
         'Loading',
-        'Notify'
+        'Notify',
       ],
     },
 
@@ -94,7 +94,7 @@ module.exports = function () {
 
     devServer: {
       // https: true,
-      // port: 8080,
+      port: 3000,
       open: true, // opens browser window automatically
     },
 
