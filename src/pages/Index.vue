@@ -39,6 +39,7 @@
             color="dark-purple"
             class="col-2 offset-2"
             :label="$t('login')"
+            :loading="loginLoading"
             type="submit"
           />
       </div>
@@ -57,15 +58,29 @@ export default {
     return {
       username: '',
       password: '',
+      loginLoading: false,
     };
   },
   methods: {
     onSubmit() {
-      this.$q.loading.show();
-      console.log(`username == ${this.username}`);
-      console.log(`password == ${this.password}`);
-      console.log(process.env);
-      this.$q.loading.hide();
+      this.loginLoading = true;
+
+      this.$axios.post('login', {
+        username: this.username,
+        password: this.password,
+      }).then((resp) => {
+        this.$q.localStorage.set('accessToken', resp.headers);
+        console.log(resp.headers.authorization);
+      }).catch(() => {
+        this.$q.notify({
+          color: 'negative',
+          position: 'top',
+          message: 'login failed',
+          icon: 'report_problem',
+        });
+      });
+
+      this.loginLoading = false;
     },
   },
 };
