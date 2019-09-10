@@ -35,6 +35,7 @@ module.exports = function () {
       // all: true, // --- includes everything; for dev only!
 
       components: [
+        'QAjaxBar ',
         'QAvatar',
         'QBtn',
         'QCard',
@@ -56,12 +57,11 @@ module.exports = function () {
         'QScrollArea',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle',
-        'QAjaxBar ',
+        'QToolbarTitle'
       ],
 
       directives: [
-        'Ripple',
+        'Ripple'
       ],
 
       // Quasar plugins
@@ -69,7 +69,7 @@ module.exports = function () {
         'Loading',
         'LocalStorage',
         'Notify',
-        'SessionStorage',
+        'SessionStorage'
       ],
     },
 

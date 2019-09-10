@@ -64,23 +64,25 @@ export default {
   methods: {
     onSubmit() {
       this.loginLoading = true;
+      console.log('Submit');
+      this.$store.state.account.getAccount();
 
-      this.$axios.post('login', {
-        username: this.username,
-        password: this.password,
-      }).then((resp) => {
-        this.$q.localStorage.set('accessToken', resp.headers);
-        console.log(resp.headers.authorization);
-      }).catch(() => {
-        this.$q.notify({
-          color: 'negative',
-          position: 'top',
-          message: 'login failed',
-          icon: 'report_problem',
-        });
-      });
-
-      this.loginLoading = false;
+      // this.$axios.post('login', {
+      //   username: this.username,
+      //   password: this.password,
+      // }).then((resp) => {
+      //   this.$q.localStorage.set('accessToken', resp.headers);
+      //   this.$store.state.account.getAccount();
+      //   this.loginLoading = false;
+      // }).catch(() => {
+      //   this.loginLoading = false;
+      //   this.$q.notify({
+      //     color: 'negative',
+      //     position: 'top',
+      //     message: 'login failed',
+      //     icon: 'report_problem',
+      //   });
+      // });
     },
   },
 };
