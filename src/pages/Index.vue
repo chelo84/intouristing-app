@@ -45,6 +45,15 @@
       </div>
     </q-form>
     </div>
+
+    <q-ajax-bar
+      ref="bar"
+      position="bottom"
+      color="accent"
+      size="10px"
+      skip-hijack
+    />
+
   </q-page>
 </template>
 
@@ -64,25 +73,27 @@ export default {
   methods: {
     onSubmit() {
       this.loginLoading = true;
-      console.log('Submit');
-      this.$store.state.account.getAccount();
+      this.$refs.bar.start();
 
-      // this.$axios.post('login', {
-      //   username: this.username,
-      //   password: this.password,
-      // }).then((resp) => {
-      //   this.$q.localStorage.set('accessToken', resp.headers);
-      //   this.$store.state.account.getAccount();
-      //   this.loginLoading = false;
-      // }).catch(() => {
-      //   this.loginLoading = false;
-      //   this.$q.notify({
-      //     color: 'negative',
-      //     position: 'top',
-      //     message: 'login failed',
-      //     icon: 'report_problem',
-      //   });
-      // });
+      this.$axios.post('login', {
+        username: this.username,
+        password: this.password,
+      }).then((resp) => {
+        console.log(resp.headers.authorization);
+        this.$q.localStorage.set('accessToken', resp.headers.authorization);
+        const account = this.$store.getters['account/getAccount'];
+        console.log(account);
+      }).catch(() => {
+        this.$q.notify({
+          color: 'negative',
+          position: 'top',
+          message: 'login failed',
+          icon: 'report_problem',
+        });
+      }).then(() => {
+        this.loginLoading = false;
+        this.$refs.bar.stop();
+      });
     },
   },
 };

@@ -1,18 +1,15 @@
-// import { LocalStorage } from 'quasar';
-// import { jwtDecode } from 'jwt-decode';
-// import state from './state';
+import { LocalStorage } from 'quasar';
+import jwt from 'jsonwebtoken';
+import state from './state';
 
 export function getAccount() {
-  console.log('getAccount');
-  // let { account } = state.account;
-  // if (!account) {
-  //   const accessToken = LocalStorage.getItem('accessToken').replace('Bearer ', '');
-  //   account = jwtDecode(accessToken);
-  // }
+  let { account } = state;
 
-  // state.account = account;
+  if (!account) {
+    const accessToken = String(LocalStorage.getItem('accessToken')).replace('Bearer ', '');
+    account = jwt.decode(accessToken);
+    state.account = account;
+  }
 
-  // console.log(account);
-
-  // return account;
+  return account;
 }
