@@ -79,10 +79,10 @@ export default {
         username: this.username,
         password: this.password,
       }).then((resp) => {
-        console.log(resp.headers.authorization);
         this.$q.localStorage.set('accessToken', resp.headers.authorization);
-        const account = this.$store.getters['account/getAccount'];
-        console.log(account);
+        this.$store.commit('auth/login');
+        // const account = this.$store.getters['account/getAccount'];
+        // console.log(account);
       }).catch(() => {
         this.$q.notify({
           color: 'negative',

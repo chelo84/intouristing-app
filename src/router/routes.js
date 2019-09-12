@@ -1,7 +1,42 @@
+import store from '../store';
+
+let entryUrl = null;
+
+const guard = async (to, from, next) => {
+  if (store().state.auth.account && store().state.auth.loggedIn) {
+    if (entryUrl) {
+      const url = entryUrl;
+      entryUrl = null;
+      return next(url); // goto stored url
+    }
+    return next(); // all is fine
+  }
+
+  await store().dispatch('auth/checkAuth');
+  // we use await as this async request has to finish
+  // before we can be sure
+
+  if (store().state.auth.account && store().state.auth.loggedIn) {
+    next();
+  } else {
+    entryUrl = to.path; // store entry url before redirect
+    next('/login');
+  }
+
+  return null;
+};
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
+    component: () => import('layouts/Layout.vue'),
+    children: [
+      { path: '', component: () => import('pages/Index.vue') },
+    ],
+  },
+  {
+    path: '/home',
+    beforeEnter: guard,
     component: () => import('layouts/Layout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
