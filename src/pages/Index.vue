@@ -1,50 +1,5 @@
 <template>
   <q-page class="flex flex-center">
-    <div class="shadow-13"
-      style="padding: 2% 2% 2% 2%; width: 500px;">
-      <div class="row flex flex-center login-field">
-        <img alt="Quasar logo"
-          src="~assets/quasar-logo-full.svg"
-          style="height: 200px;">
-      </div>
-      <q-form
-        @submit="onSubmit"
-        class="q-gutter-md"
-      >
-        <div class="row flex flex-center login-field">
-          <q-input
-            class="col-10"
-            v-model="username"
-            :label="$t('username')"
-            color="dark-purple"
-            :rules="[val => !!val || 'Field is required']"
-          />
-        </div>
-        <div class="row flex flex-center login-field">
-          <q-input v-model="password"
-            type="password"
-            class="col-10"
-            :label="$t('password')"
-            color="dark-purple"
-            :rules="[val => !!val || 'Field is required']"
-          />
-        </div>
-        <div class="row flex">
-          <div class="col-5 offset-3 flex flex-center">
-            <a href="#" >Forgot password</a>
-            <strong>&nbsp;|&nbsp;</strong>
-            <a href="#">Sign up</a>
-          </div>
-          <q-btn
-            color="dark-purple"
-            class="col-2 offset-2"
-            :label="$t('login')"
-            :loading="loginLoading"
-            type="submit"
-          />
-      </div>
-    </q-form>
-    </div>
 
     <q-ajax-bar
       ref="bar"
@@ -65,43 +20,10 @@ export default {
   name: 'PageIndex',
   data() {
     return {
-      username: '',
-      password: '',
-      loginLoading: false,
     };
   },
   methods: {
-    onSubmit() {
-      this.loginLoading = true;
-      this.$refs.bar.start();
 
-      this.$axios.post('login', {
-        username: this.username,
-        password: this.password,
-      }).then((resp) => {
-        this.$q.localStorage.set('accessToken', resp.headers.authorization);
-        this.$store.commit('auth/login');
-        // const account = this.$store.getters['account/getAccount'];
-        // console.log(account);
-      }).catch(() => {
-        this.$q.notify({
-          color: 'negative',
-          position: 'top',
-          message: 'login failed',
-          icon: 'report_problem',
-        });
-      }).then(() => {
-        this.loginLoading = false;
-        this.$refs.bar.stop();
-      });
-    },
   },
 };
 </script>
-
-<style scoped>
-.login-field {
-  padding-bottom: 20px;
-  width: 100%;
-}
-</style>

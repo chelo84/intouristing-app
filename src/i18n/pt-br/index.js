@@ -5,4 +5,6 @@ export default {
   username: 'Nome de usuário',
   password: 'Senha',
   login: 'Login',
+  logout: 'Logout',
+
 };

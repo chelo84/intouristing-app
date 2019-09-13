@@ -3,7 +3,6 @@
       <q-header elevated class="dark-purple">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <!-- <q-toolbar-title>Header</q-toolbar-title> -->
         </q-toolbar>
       </q-header>
 
@@ -23,14 +22,16 @@
         <q-scroll-area class="fit">
           <q-list padding>
             <q-item clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="img:https://cdn.quasar.dev/img/boy-avatar.png" />
-              </q-item-section>
+              <q-avatar rounded size="24px">
+                <img :src="avatarImg">
+              </q-avatar>
 
-              <q-item-section>
-                User name
+              <q-item-section style="padding-left: 16px;">
+                {{name}} {{lastName}}
               </q-item-section>
             </q-item>
+
+            <q-separator />
 
             <q-item clickable v-ripple>
               <q-item-section avatar>
@@ -42,6 +43,8 @@
               </q-item-section>
             </q-item>
 
+            <q-separator />
+
             <q-item active clickable v-ripple>
               <q-item-section avatar>
                 <q-icon name="star" />
@@ -51,6 +54,8 @@
                 Star
               </q-item-section>
             </q-item>
+
+            <q-separator />
 
             <q-item clickable v-ripple>
               <q-item-section avatar>
@@ -73,6 +78,19 @@
                 Drafts
               </q-item-section>
             </q-item>
+
+            <q-separator />
+
+            <q-item clickable v-ripple @click="logout">
+              <q-item-section avatar>
+                <q-icon name="logout" />
+              </q-item-section>
+
+              <q-item-section>
+                {{ $t('logout') }}
+              </q-item-section>
+            </q-item>
+
           </q-list>
         </q-scroll-area>
       </q-drawer>
@@ -90,7 +108,22 @@ export default {
     return {
       drawer: false,
       miniState: true,
+      avatarImg: `${process.env.API_URL}users/avatar/${this.$store.getters['auth/getAccount'].id}`,
     };
+  },
+  computed: {
+    name() {
+      return (this.$store.getters['auth/getAccount'].name || '');
+    },
+    lastName() {
+      return (this.$store.getters['auth/getAccount'].lastName || '');
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    },
   },
 };
 </script>

@@ -5,3 +5,7 @@ export function checkAuth(context) {
     context.commit('login');
   }
 }
+
+export function logout(context) {
+  context.commit('logout');
+}

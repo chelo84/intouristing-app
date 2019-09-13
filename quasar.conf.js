@@ -57,11 +57,11 @@ module.exports = function () {
         'QScrollArea',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle'
+        'QToolbarTitle',
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
       ],
 
       // Quasar plugins
@@ -69,7 +69,7 @@ module.exports = function () {
         'Loading',
         'LocalStorage',
         'Notify',
-        'SessionStorage'
+        'SessionStorage',
       ],
     },
 
