@@ -3,7 +3,7 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
-module.exports = function () {
+module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -35,7 +35,7 @@ module.exports = function () {
       // all: true, // --- includes everything; for dev only!
 
       components: [
-        'QAjaxBar ',
+        'QAjaxBar',
         'QAvatar',
         'QBtn',
         'QCard',
@@ -57,19 +57,20 @@ module.exports = function () {
         'QScrollArea',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle',
+        'QToolbarTitle'
       ],
 
       directives: [
-        'Ripple',
+        'Ripple'
       ],
 
       // Quasar plugins
       plugins: [
         'Loading',
         'LocalStorage',
+        'Meta',
         'Notify',
-        'SessionStorage',
+        'SessionStorage'
       ],
     },
 
@@ -77,7 +78,7 @@ module.exports = function () {
 
     build: {
       scopeHoisting: true,
-      // vueRouterMode: 'history',
+      vueRouterMode: ctx.dev ? 'history' : 'hash',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,

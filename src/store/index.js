@@ -18,7 +18,7 @@ export default function (/* { ssrContext } */) {
 
     // enable strict mode (adds overhead!)
     // for dev mode only
-    strict: false,
+    strict: true,
   });
 
   return Store;

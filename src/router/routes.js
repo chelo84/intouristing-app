@@ -29,7 +29,14 @@ const routes = [
     path: '/login',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Login.vue') },
+      { path: '', component: () => import('pages/login/Login.vue') },
+    ],
+  },
+  {
+    path: '/sign-up',
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/login/SignUp.vue'), meta: { hasButton: true, buttonIcon: 'back_button' } },
     ],
   },
   {

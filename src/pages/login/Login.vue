@@ -10,40 +10,39 @@
     />
 
     <div class="shadow-13 q-pa-lg" style="width: 440px;">
-      <div class="row flex flex-center login-field">
+      <div class="row flex flex-center login-img">
         <img alt="Quasar logo"
           src="~assets/quasar-logo-full.svg"
-          style="height: 200px;">
+          style="height: 180px;">
       </div>
       <q-form
         @submit="onSubmit"
-        class="q-gutter-md"
+        class="q-gutter-sm"
       >
-        <div class="row flex flex-center login-field">
+        <div class="row flex flex-center q-mb-md">
           <q-input
             class="col-10"
             outlined
             v-model="username"
             :label="$t('username')"
             color="dark-purple"
-            :rules="[val => !!val || 'Field is required']"
+            :rules="[val => !!val || $t('requiredField')]"
           />
         </div>
-        <div class="row flex flex-center login-field">
+        <div class="row flex flex-center q-mb-md">
           <q-input v-model="password"
             outlined
             type="password"
             class="col-10"
             :label="$t('password')"
             color="dark-purple"
-            :rules="[val => !!val || 'Field is required']"
+            :rules="[val => !!val || $t('requiredField')]"
           />
         </div>
         <div class="row flex">
           <div class="col-6 offset-1 flex flex-center">
-            <a href="#" >Forgot password</a>
-            <strong>&nbsp;|&nbsp;</strong>
-            <a href="#">Sign up</a>
+            <router-link to="#" class="q-mr-sm" >{{ $t('forgotPassword') }}</router-link>
+            <router-link to="sign-up">{{ $t('signUp') }}</router-link>
           </div>
           <q-btn
             color="dark-purple"
@@ -64,7 +63,7 @@
 
 <script>
 export default {
-  name: 'PageIndex',
+  name: 'Login',
   data() {
     return {
       username: '',
@@ -76,6 +75,7 @@ export default {
     onSubmit() {
       this.loginLoading = true;
       this.$refs.bar.start();
+      // this.$i18n.locale = 'pt-br';
 
       this.$axios.post('login', {
         username: this.username,
@@ -102,8 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.login-field {
+.login-img {
   padding-bottom: 20px;
-  width: 100%;
 }
 </style>

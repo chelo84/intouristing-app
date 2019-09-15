@@ -6,5 +6,16 @@ export default {
   password: 'Password',
   login: 'Login',
   logout: 'Logout',
-
+  forgotPassword: 'Forgot password',
+  signUp: 'Sign up',
+  loginPage: 'Login page',
+  confirmationMatchPassword: 'Confirmation must match the password',
+  requiredField: 'Required field',
+  repeatPassword: 'Repeat password',
+  register: 'Register',
+  usernameAlreadyBeingUsed: 'This username is already being used',
+  emailAlreadyBeingUsed: 'This e-mail is already being used',
+  email: 'E-mail',
+  malformedEmail: 'Malformed e-mail',
+  passwordMinLength: 'Password must have at least 6 characters',
 };
