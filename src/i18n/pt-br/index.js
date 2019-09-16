@@ -18,4 +18,6 @@ export default {
   email: 'E-mail',
   malformedEmail: 'Formato de e-mail inválido',
   passwordMinLength: 'Senha precisa ter no mínimo 6 caracteres',
+  name: 'Nome',
+  lastName: 'Sobrenome',
 };

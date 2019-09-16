@@ -29,6 +29,7 @@ module.exports = function (ctx) {
     ],
 
     framework: {
+      cssAddon: true,
       // iconSet: 'ionicons-v4',
       // lang: 'de', // Quasar language
 
@@ -57,11 +58,11 @@ module.exports = function (ctx) {
         'QScrollArea',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle'
+        'QToolbarTitle',
       ],
 
       directives: [
-        'Ripple'
+        'Ripple',
       ],
 
       // Quasar plugins
@@ -70,7 +71,7 @@ module.exports = function (ctx) {
         'LocalStorage',
         'Meta',
         'Notify',
-        'SessionStorage'
+        'SessionStorage',
       ],
     },
 

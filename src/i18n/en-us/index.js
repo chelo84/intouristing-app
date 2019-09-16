@@ -18,4 +18,6 @@ export default {
   email: 'E-mail',
   malformedEmail: 'Malformed e-mail',
   passwordMinLength: 'Password must have at least 6 characters',
+  name: 'Name',
+  lastName: 'Last name',
 };
