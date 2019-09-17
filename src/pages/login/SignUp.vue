@@ -155,7 +155,7 @@ export default {
 
       // Mock position
       this.user.userPosition = {
-        latitude: 3.2222,
+        latitude: 3.2223,
         longitude: 21.223,
         accuracy: 2.232,
         speed: 33.33,
