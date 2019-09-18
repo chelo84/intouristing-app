@@ -20,4 +20,8 @@ export default {
   passwordMinLength: 'Password must have at least 6 characters',
   name: 'Name',
   lastName: 'Last name',
+  language: 'Language',
+  remember: 'Remember',
+  wrongUsernameOrPassword: 'Wrong username or password',
+  loginFailed: 'Login failed',
 };

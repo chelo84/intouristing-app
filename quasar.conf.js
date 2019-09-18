@@ -42,6 +42,7 @@ module.exports = function (ctx) {
         'QCard',
         'QCardActions',
         'QCardSection',
+        'QCheckbox',
         'QDrawer',
         'QForm',
         'QHeader',
@@ -56,13 +57,14 @@ module.exports = function (ctx) {
         'QPage',
         'QPageContainer',
         'QScrollArea',
+        'QSelect',
         'QSeparator',
         'QToolbar',
-        'QToolbarTitle',
+        'QToolbarTitle'
       ],
 
       directives: [
-        'Ripple',
+        'Ripple'
       ],
 
       // Quasar plugins
@@ -71,7 +73,7 @@ module.exports = function (ctx) {
         'LocalStorage',
         'Meta',
         'Notify',
-        'SessionStorage',
+        'SessionStorage'
       ],
     },
 

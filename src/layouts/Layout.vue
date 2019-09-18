@@ -22,11 +22,11 @@
         <q-scroll-area class="fit">
           <q-list padding>
             <q-item clickable v-ripple>
-              <q-avatar rounded size="24px">
-                <img :src="avatarImg">
-              </q-avatar>
+              <q-item-section avatar>
+                <q-icon name="account_circle" />
+              </q-item-section>
 
-              <q-item-section style="padding-left: 16px;">
+              <q-item-section>
                 {{name}} {{lastName}}
               </q-item-section>
             </q-item>
@@ -108,7 +108,6 @@ export default {
     return {
       drawer: false,
       miniState: true,
-      avatarImg: `${process.env.API_URL}users/avatar/${this.$store.getters['auth/getAccount'].id}`,
     };
   },
   computed: {

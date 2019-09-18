@@ -20,4 +20,8 @@ export default {
   passwordMinLength: 'Senha precisa ter no mínimo 6 caracteres',
   name: 'Nome',
   lastName: 'Sobrenome',
+  language: 'Linguagem',
+  remember: 'Lembrar',
+  wrongUsernameOrPassword: 'Nome de usuário ou senha incorretos',
+  loginFailed: 'Falha no login',
 };

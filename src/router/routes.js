@@ -3,7 +3,7 @@ import store from '../store';
 let entryUrl = null;
 
 const guard = async (to, from, next) => {
-  if (store().state.auth.account && store().state.auth.loggedIn) {
+  if (store().getters['auth/getAccount'] && store().getters['auth/getLoggedIn']) {
     if (entryUrl) {
       const url = entryUrl;
       entryUrl = null;
@@ -14,7 +14,7 @@ const guard = async (to, from, next) => {
 
   await store().dispatch('auth/checkAuth');
 
-  if (store().state.auth.account && store().state.auth.loggedIn) {
+  if (store().getters['auth/getAccount'] && store().getters['auth/getLoggedIn']) {
     next();
   } else {
     entryUrl = to.path;

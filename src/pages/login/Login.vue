@@ -19,9 +19,9 @@
         @submit="onSubmit"
         class="q-gutter-sm"
       >
-        <div class="row flex flex-center q-mb-md">
+        <div class="row q-mb-md">
           <q-input
-            class="col-10"
+            class="offset-1 col-10"
             outlined
             v-model="username"
             :label="$t('username')"
@@ -29,24 +29,41 @@
             :rules="[val => !!val || $t('requiredField')]"
           />
         </div>
-        <div class="row flex flex-center q-mb-md">
+        <div class="row flex q-mb-md">
           <q-input v-model="password"
             outlined
             type="password"
-            class="col-10"
+            class="offset-1 col-10"
             :label="$t('password')"
             color="dark-purple"
             :rules="[val => !!val || $t('requiredField')]"
           />
         </div>
-        <div class="row flex">
-          <div class="col-6 offset-1 flex flex-center">
+        <div class="row">
+          <div class="col-6">
+            <q-checkbox v-model="remember" :label="$t('remember')" />
+          </div>
+
+          <div class="col-6">
+            <q-select
+              borderless
+              v-model="locale"
+              dense
+              options-dense
+              :options="locales"
+              :label="$t('language')"
+              @input="localeChange"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 flex flex-center">
             <router-link to="#" class="q-mr-sm" >{{ $t('forgotPassword') }}</router-link>
             <router-link to="sign-up">{{ $t('signUp') }}</router-link>
           </div>
           <q-btn
             color="dark-purple"
-            class="col-2 offset-3"
+            class="col-2 offset-4"
             :label="$t('login')"
             :loading="loginLoading"
             type="submit"
@@ -66,16 +83,26 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: '',
+      username: this.$q.localStorage.getItem('rememberUsername') || '',
       password: '',
       loginLoading: false,
+      locale: this.$q.localStorage.getItem('locale') || this.$i18n.locale,
+      remember: !!this.$q.localStorage.getItem('rememberUsername') || false,
     };
   },
+  computed: {
+    locales() {
+      return this.$i18n.availableLocales;
+    },
+  },
   methods: {
+    localeChange() {
+      this.$i18n.locale = this.locale;
+      this.$q.localStorage.set('locale', this.locale);
+    },
     onSubmit() {
       this.loginLoading = true;
       this.$refs.bar.start();
-      // this.$i18n.locale = 'pt-br';
 
       this.$axios.post('login', {
         username: this.username,
@@ -84,12 +111,18 @@ export default {
         this.$q.localStorage.set('accessToken', resp.headers.authorization);
         this.$store.commit('auth/login');
 
+        if (this.remember) {
+          this.$q.localStorage.set('rememberUsername', this.username);
+        } else {
+          this.$q.localStorage.remove('rememberUsername');
+        }
+
         this.$router.push('/');
-      }).catch(() => {
+      }).catch((error) => {
         this.$q.notify({
           color: 'negative',
           position: 'top',
-          message: 'login failed',
+          message: error.response.status === 403 ? this.$t('wrongUsernameOrPassword') : this.$t('loginFailed'),
           icon: 'report_problem',
         });
       }).then(() => {
