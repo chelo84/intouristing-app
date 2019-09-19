@@ -94,6 +94,7 @@
                   val => !!val || $t('requiredField'),
                   val => val.length >= 6 || $t('passwordMinLength'),
               ]"
+              autocomplete="new-password"
               @blur="verifyPassword"
               lazy-rules
             />
@@ -170,6 +171,12 @@ export default {
         this.$router.push('/login');
       }).catch((error) => {
         console.error(error);
+        this.$q.notify({
+          color: 'negative',
+          position: 'top',
+          message: 'Whoops! Something went wrong',
+          icon: 'report_problem',
+        });
       }).then(() => {
         this.registerLoading = false;
         if (this.$refs.bar) this.$refs.bar.stop();

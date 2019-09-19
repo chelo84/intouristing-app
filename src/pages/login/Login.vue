@@ -27,6 +27,7 @@
             :label="$t('username')"
             color="dark-purple"
             :rules="[val => !!val || $t('requiredField')]"
+            autocomplete="username"
           />
         </div>
         <div class="row flex q-mb-md">
@@ -37,16 +38,12 @@
             :label="$t('password')"
             color="dark-purple"
             :rules="[val => !!val || $t('requiredField')]"
+            autocomplete="current-password"
           />
         </div>
-        <div class="row">
-          <div class="col-6">
-            <q-checkbox v-model="remember" :label="$t('remember')" />
-          </div>
-
+        <div class="row q-mb-md">
           <div class="col-6">
             <q-select
-              borderless
               v-model="locale"
               dense
               options-dense
@@ -57,8 +54,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-6 flex flex-center">
-            <router-link to="#" class="q-mr-sm" >{{ $t('forgotPassword') }}</router-link>
+          <div class="col-6">
+            <!-- <router-link to="#" class="q-mr-sm" >{{ $t('forgotPassword') }}</router-link> -->
             <router-link to="sign-up">{{ $t('signUp') }}</router-link>
           </div>
           <q-btn
@@ -126,8 +123,10 @@ export default {
           icon: 'report_problem',
         });
       }).then(() => {
-        this.loginLoading = false;
-        this.$refs.bar.stop();
+        if (this.loginLoading && this.$refs.bar) {
+          this.loginLoading = false;
+          this.$refs.bar.stop();
+        }
       });
     },
   },
