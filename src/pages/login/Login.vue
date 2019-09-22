@@ -6,7 +6,6 @@
       position="bottom"
       color="accent"
       size="10px"
-      skip-hijack
     />
 
     <div class="shadow-13 q-pa-lg" style="width: 440px;">
@@ -41,8 +40,12 @@
             autocomplete="current-password"
           />
         </div>
-        <div class="row q-mb-md">
-          <div class="col-6">
+        <div class="row items-center">
+          <div class="col-4">
+            <!-- <router-link to="#" class="q-mr-sm" >{{ $t('forgotPassword') }}</router-link> -->
+            <router-link to="sign-up">{{ $t('signUp') }}</router-link>
+          </div>
+          <div class="col-4">
             <q-select
               v-model="locale"
               dense
@@ -52,15 +55,9 @@
               @input="localeChange"
             />
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <!-- <router-link to="#" class="q-mr-sm" >{{ $t('forgotPassword') }}</router-link> -->
-            <router-link to="sign-up">{{ $t('signUp') }}</router-link>
-          </div>
           <q-btn
             color="dark-purple"
-            class="col-2 offset-4"
+            class="col-2 offset-2"
             :label="$t('login')"
             :loading="loginLoading"
             type="submit"
@@ -99,7 +96,6 @@ export default {
     },
     onSubmit() {
       this.loginLoading = true;
-      this.$refs.bar.start();
 
       this.$axios.post('login', {
         username: this.username,
@@ -123,10 +119,7 @@ export default {
           icon: 'report_problem',
         });
       }).then(() => {
-        if (this.loginLoading && this.$refs.bar) {
-          this.loginLoading = false;
-          this.$refs.bar.stop();
-        }
+        this.loginLoading = false;
       });
     },
   },

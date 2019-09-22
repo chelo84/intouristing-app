@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <q-ajax-bar ref="bar" position="bottom" color="accent" size="10px" skip-hijack />
+    <q-ajax-bar ref="bar" position="bottom" color="accent" size="10px" />
 
     <div class="shadow-13 q-pa-lg" style="width: 700px;">
       <div class="row flex q-mb-md">
@@ -152,7 +152,6 @@ export default {
   methods: {
     onSubmit() {
       this.registerLoading = true;
-      this.$refs.bar.start();
 
       // Mock position
       this.user.userPosition = {
@@ -167,7 +166,6 @@ export default {
         'users',
         this.user,
       ).then(() => {
-        this.$refs.bar.stop();
         this.$router.push('/login');
       }).catch((error) => {
         console.error(error);
@@ -179,7 +177,6 @@ export default {
         });
       }).then(() => {
         this.registerLoading = false;
-        if (this.$refs.bar) this.$refs.bar.stop();
       });
     },
     verifyPassword() {

@@ -21,31 +21,32 @@
       >
         <q-scroll-area class="fit">
           <q-list padding>
-            <q-item clickable v-ripple>
+
+            <q-item clickable v-ripple to="/search">
+              <q-item-section avatar>
+                <q-icon name="mdi-map-marker-radius" />
+              </q-item-section>
+
+              <q-item-section>
+                {{ $t('search') }}
+              </q-item-section>
+            </q-item>
+
+            <q-separator />
+
+            <q-item clickable v-ripple to="/edit-profile">
               <q-item-section avatar>
                 <q-icon name="account_circle" />
               </q-item-section>
 
               <q-item-section>
-                {{name}} {{lastName}}
+                {{ name }} {{ lastName }}
               </q-item-section>
             </q-item>
 
             <q-separator />
 
-            <q-item clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="inbox" />
-              </q-item-section>
-
-              <q-item-section>
-                Inbox
-              </q-item-section>
-            </q-item>
-
-            <q-separator />
-
-            <q-item active clickable v-ripple>
+            <q-item clickable v-ripple to="#">
               <q-item-section avatar>
                 <q-icon name="star" />
               </q-item-section>
@@ -57,7 +58,7 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple to="#">
               <q-item-section avatar>
                 <q-icon name="send" />
               </q-item-section>
@@ -69,7 +70,7 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple to="#">
               <q-item-section avatar>
                 <q-icon name="drafts" />
               </q-item-section>
@@ -81,7 +82,7 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple @click="logout">
+            <q-item clickable v-ripple @click="logout" to="#">
               <q-item-section avatar>
                 <q-icon name="logout" />
               </q-item-section>

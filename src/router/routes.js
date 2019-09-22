@@ -36,7 +36,7 @@ const routes = [
     path: '/sign-up',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/login/SignUp.vue'), meta: { hasButton: true, buttonIcon: 'back_button' } },
+      { path: '', component: () => import('pages/login/SignUp.vue') },
     ],
   },
   {
@@ -44,7 +44,9 @@ const routes = [
     beforeEnter: guard,
     component: () => import('layouts/Layout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
+      { path: '', redirect: '/search' },
+      { path: 'search', component: () => import('pages/Index.vue') },
+      { path: 'edit-profile', component: () => import('pages/EditProfile.vue') },
     ],
   },
 ];

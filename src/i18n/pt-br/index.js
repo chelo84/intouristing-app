@@ -24,4 +24,5 @@ export default {
   remember: 'Lembrar',
   wrongUsernameOrPassword: 'Nome de usuário ou senha incorretos',
   loginFailed: 'Falha no login',
+  search: 'Procurar',
 };
