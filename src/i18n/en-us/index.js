@@ -25,4 +25,5 @@ export default {
   wrongUsernameOrPassword: 'Wrong username or password',
   loginFailed: 'Login failed',
   search: 'Search',
+  change: 'Change',
 };

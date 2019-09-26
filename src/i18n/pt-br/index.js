@@ -25,4 +25,5 @@ export default {
   wrongUsernameOrPassword: 'Nome de usuário ou senha incorretos',
   loginFailed: 'Falha no login',
   search: 'Procurar',
+  change: 'Trocar',
 };
