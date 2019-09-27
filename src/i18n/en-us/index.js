@@ -26,4 +26,6 @@ export default {
   loginFailed: 'Login failed',
   search: 'Search',
   change: 'Change',
+  save: 'Save',
+  saved: 'Saved',
 };

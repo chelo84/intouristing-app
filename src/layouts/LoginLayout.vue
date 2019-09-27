@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf">
 
-    <q-page-container  style="background-color: black;">
+    <q-page-container>
       <router-view />
     </q-page-container>
 

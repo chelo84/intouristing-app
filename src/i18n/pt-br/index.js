@@ -26,4 +26,6 @@ export default {
   loginFailed: 'Falha no login',
   search: 'Procurar',
   change: 'Trocar',
+  save: 'Salvar',
+  saved: 'Salvo',
 };
