@@ -143,6 +143,7 @@ export default {
           message: this.$t('saved'),
           icon: 'check_circle',
         });
+        this.updateToken();
       }).catch((error) => {
         console.error(error);
         this.$q.notify({
@@ -153,6 +154,12 @@ export default {
         });
       }).then(() => {
         this.buttonLoading = false;
+      });
+    },
+    updateToken() {
+      this.$axios.get('users/token/update').then((resp) => {
+        this.$q.localStorage.set('accessToken', resp.data);
+        console.log(this.$store.commit('auth/login'));
       });
     },
   },
