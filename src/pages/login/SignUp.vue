@@ -4,7 +4,7 @@
 
     <div class="shadow-13 q-pa-lg" style="width: 700px;">
       <div class="row flex q-mb-md">
-        <router-link to="/login">
+        <router-link to="/login" style="text-decoration: none;">
           <q-icon name="arrow_back" />
           {{ $t('loginPage') }}
         </router-link>

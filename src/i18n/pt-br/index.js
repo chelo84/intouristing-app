@@ -28,4 +28,5 @@ export default {
   change: 'Trocar',
   save: 'Salvar',
   saved: 'Salvo',
+
 };

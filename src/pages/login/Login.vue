@@ -8,7 +8,7 @@
       size="10px"
     />
 
-    <div class="shadow-13 q-pa-lg" style="width: 440px;">
+    <div class="shadow-3 q-pa-lg" style="width: 440px; min-height: 500px;">
       <div class="row flex flex-center login-img">
         <img alt="Quasar logo"
           src="~assets/quasar-logo-full.svg"
