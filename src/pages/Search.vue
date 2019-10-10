@@ -10,16 +10,15 @@
     />
 
     <div style="height: calc(100vh - 95px); width: 100%;">
-      <l-map ref="map" :maxZoom=zoom setView="true">
-        <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+      <l-map ref="map" :worldCopyJump="true" >
+        <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" :noWrap="true"></l-tile-layer>
 
         <l-moving-marker
-          :key="user.id"
-          :lat-lng="user.latlng"
+          :ref="user.id"
           :duration="2000"
-          :icon="icon">
-          <l-popup content="You are here"/>
-        </l-moving-marker>
+          :lat-lng="user.latlng"
+          :icon="icon"
+        />
 
       </l-map>
     </div>
@@ -34,7 +33,7 @@
 </style>
 
 <script>
-import { LMap, LTileLayer, LPopup } from 'vue2-leaflet';
+import { LMap, LTileLayer } from 'vue2-leaflet';
 import L from 'leaflet';
 import LMovingMarker from 'vue2-leaflet-movingmarker';
 import 'leaflet/dist/leaflet.css';
@@ -44,44 +43,43 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LPopup,
     LMovingMarker,
   },
   mounted() {
-    // this.$refs.map.mapObject.on('locationfound', this.onLocationFound);
-    // this.$refs.map.mapObject.locate({ setView: true, watch: true, maxZoom: 18 });
-    if (!navigator.geolocation) {
-      console.error('Not supported');
-    } else {
-      navigator.geolocation.getCurrentPosition(this.success, this.error);
-    }
-    this.icon = L.icon({
-      iconUrl: '/statics/icons/map-pin.png',
-      iconSize: [38, 40], // size of the icon
-      popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
-    });
+    this.$refs.map.mapObject.on('locationfound', this.onLocationFound);
+    this.$refs.map.mapObject.locate({ setView: true, watch: true });
   },
   data() {
+    const icon = L.icon({
+      iconUrl: '/statics/icons/map-pin.png',
+      iconSize: [38, 40],
+      popupAnchor: [-3, -76],
+    });
+
     return {
-      zoom: 3,
-      icon: null,
+      maxZoom: 15,
+      minZoom: 10,
+      icon,
       user: {
         id: this.$store.getters['auth/getAccount'].id,
-        latlng: null,
+        latlng: L.latLng(10.23, 13.3),
       },
+      isUpdated: false,
     };
   },
   methods: {
     onLocationFound(e) {
-      L.marker(e.latlng, { icon: 'idk' }).addTo(this.$refs.map.mapObject)
-        .bindPopup('You are here').openPopup();
-      // L.circle(e.latlng, 1).addTo(this.$refs.map.mapObject);
+      this.user.latlng = e.latlng;
+
+      this.updateLocation();
     },
-    success(position) {
-      this.user.latlng = L.LatLng(position.coords.latitude, position.coords.longitude);
-    },
-    error() {
-      console.log('error');
+    updateLocation() {
+      if (!this.isUpdated) {
+        console.log('update location');
+        this.isUpdated = true;
+
+        setTimeout(() => { this.isUpdated = false; }, 5000);
+      }
     },
   },
 };
