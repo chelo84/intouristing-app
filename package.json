@@ -18,10 +18,12 @@
     "jwt-decode": "^2.2.0",
     "leaflet": "^1.5.1",
     "quasar": "^1.0.0",
+    "sockjs-client": "^1.4.0",
     "vue-i18n": "^8.0.0",
     "vue2-leaflet": "^2.2.1",
     "vue2-leaflet-movingmarker": "^0.0.1",
-    "vuelidate": "^0.7.4"
+    "vuelidate": "^0.7.4",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",

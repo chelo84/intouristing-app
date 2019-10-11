@@ -46,6 +46,8 @@ export default {
     LMovingMarker,
   },
   mounted() {
+    console.log(this.$store.dispatch('stomp/connect'));
+
     this.$refs.map.mapObject.on('locationfound', this.onLocationFound);
     this.$refs.map.mapObject.locate({ setView: true, watch: true });
   },
@@ -54,6 +56,7 @@ export default {
       iconUrl: '/statics/icons/map-pin.png',
       iconSize: [38, 40],
       popupAnchor: [-3, -76],
+      iconAnchor: [20, 33],
     });
 
     return {
@@ -75,7 +78,7 @@ export default {
     },
     updateLocation() {
       if (!this.isUpdated) {
-        console.log('update location');
+        console.log(this.$stompClient);
         this.isUpdated = true;
 
         setTimeout(() => { this.isUpdated = false; }, 5000);

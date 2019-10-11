@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import auth from './auth';
+import stomp from './stomp';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       auth,
+      stomp,
     },
 
     // enable strict mode (adds overhead!)

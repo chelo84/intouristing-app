@@ -11,3 +11,9 @@ export function login(state) {
     state.loggedIn = true;
   }
 }
+
+export function logout(state) {
+  state.account = null;
+  state.loggedIn = false;
+  LocalStorage.remove('accessToken');
+}
