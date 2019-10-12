@@ -1,4 +1,3 @@
-/*
-export function someGetter (state) {
+export function client(state) {
+  return state.stompClient;
 }
-*/

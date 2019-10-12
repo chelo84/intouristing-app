@@ -46,8 +46,6 @@ export default {
     LMovingMarker,
   },
   mounted() {
-    console.log(this.$store.dispatch('stomp/connect'));
-
     this.$refs.map.mapObject.on('locationfound', this.onLocationFound);
     this.$refs.map.mapObject.locate({ setView: true, watch: true });
   },
@@ -78,7 +76,7 @@ export default {
     },
     updateLocation() {
       if (!this.isUpdated) {
-        console.log(this.$stompClient);
+        console.log(this.$store.getters['stomp/client']);
         this.isUpdated = true;
 
         setTimeout(() => { this.isUpdated = false; }, 5000);

@@ -8,4 +8,5 @@ export function checkAuth(context) {
 
 export function logout(context) {
   context.commit('logout');
+  context.rootState.stomp.stompClient.disconnect(() => console.log('WebSocket disconnected'));
 }

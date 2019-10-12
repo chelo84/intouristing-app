@@ -105,6 +105,11 @@
 
 <script>
 export default {
+  async mounted() {
+    await this.$store.dispatch('stomp/connect');
+    // this.$stompClient = 2222;
+    console.log(this.$store.getters['stomp/client']);
+  },
   data() {
     return {
       drawer: false,
