@@ -107,8 +107,7 @@
 export default {
   async mounted() {
     await this.$store.dispatch('stomp/connect');
-    // this.$stompClient = 2222;
-    console.log(this.$store.getters['stomp/client']);
+    console.log(this.$store.getters['stomp/getStompClient']);
   },
   data() {
     return {

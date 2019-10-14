@@ -18,6 +18,7 @@
           :duration="2000"
           :lat-lng="user.latlng"
           :icon="icon"
+          opacity="0"
         />
 
       </l-map>
@@ -63,7 +64,7 @@ export default {
       icon,
       user: {
         id: this.$store.getters['auth/getAccount'].id,
-        latlng: L.latLng(10.23, 13.3),
+        latlng: L.latLng(0, 0),
       },
       isUpdated: false,
     };
@@ -72,13 +73,22 @@ export default {
     onLocationFound(e) {
       this.user.latlng = e.latlng;
 
-      this.updateLocation();
+      this.updateLocation(e);
     },
-    updateLocation() {
+    updateLocation(e) {
       if (!this.isUpdated) {
-        console.log(this.$store.getters['stomp/client']);
-        this.isUpdated = true;
+        const stompClient = this.$store.getters['stomp/getStompClient'];
+        const headers = this.$store.getters['stomp/getHeaders'];
+        const userId = this.$store.getters['auth/getAccount'].id;
+        const userPosition = {
+          user: userId,
+          latitude: e.latitude,
+          longitude: e.longitude,
+        };
 
+        stompClient.send('/ws/update-position', headers, userPosition);
+
+        this.isUpdated = true;
         setTimeout(() => { this.isUpdated = false; }, 5000);
       }
     },

@@ -1,12 +1,12 @@
 // import { stompClient } from 'boot/stomp';
-import { LocalStorage } from 'quasar';
+import { LocalStorage, uid } from 'quasar';
 import SockJS from 'sockjs-client';
 import Stomp from 'webstomp-client';
 
-function connectAndReconnect(context) {
+function connectAndReconnect(context, connectionId) {
   const accessToken = LocalStorage.getItem('accessToken');
   if (accessToken) {
-    let stompClient = context.getters['stomp/client'];
+    let stompClient = context.getters['stomp/getStompClient'];
     if (!stompClient || (stompClient && !stompClient.connected)) {
       const headers = {
         Authorization: accessToken,
@@ -45,20 +45,27 @@ function connectAndReconnect(context) {
         },
         (error) => {
           console.error(error);
-          // connectAndReconnect(context);
-          if (error && typeof error === 'object') {
-            console.error(error.headers ? error.headers.message : 'Something went wrong');
-          }
+
+          setTimeout(() => {
+            if (connectionId === context.getters.getConnectionId) {
+              connectAndReconnect(context, connectionId);
+            }
+          }, 5000);
+          // if (error && typeof error === 'object') {
+          // console.error(error.headers ? error.headers.message : 'Something went wrong');
+          // }
         },
       );
 
-      context.commit('set', stompClient);
+      context.commit('SET_STOMP_CLIENT', stompClient);
     }
   }
 }
 
-export function connect(context) {
+export async function connect(context) {
   console.log('stomp/connect');
 
-  connectAndReconnect(context);
+  context.commit('SET_CONNECTION_ID', uid());
+
+  connectAndReconnect(context, context.getters.getConnectionId);
 }

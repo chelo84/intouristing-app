@@ -1,5 +1,5 @@
 export function checkAuth(context) {
-  const account = context.getters['auth/getAccount'];
+  const account = context.getters.getAccount;
 
   if (!account) {
     context.commit('login');
