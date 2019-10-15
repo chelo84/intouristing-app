@@ -77,16 +77,23 @@ export default {
     },
     updateLocation(e) {
       if (!this.isUpdated) {
-        const stompClient = this.$store.getters['stomp/getStompClient'];
         const headers = this.$store.getters['stomp/getHeaders'];
-        const userId = this.$store.getters['auth/getAccount'].id;
+        const { id, username } = this.$store.getters['auth/getAccount'];
         const userPosition = {
-          user: userId,
+          user: id,
           latitude: e.latitude,
           longitude: e.longitude,
         };
-
-        stompClient.send('/ws/update-position', headers, userPosition);
+        headers.id = `${username}-search`;
+        console.log(headers);
+        this.$store.dispatch(
+          'stomp/send',
+          {
+            destination: '/ws/update-position',
+            body: JSON.stringify(userPosition),
+            headers,
+          },
+        );
 
         this.isUpdated = true;
         setTimeout(() => { this.isUpdated = false; }, 5000);

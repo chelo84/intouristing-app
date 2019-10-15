@@ -69,3 +69,20 @@ export async function connect(context) {
 
   connectAndReconnect(context, context.getters.getConnectionId);
 }
+
+function stompSend(context, args, tries = 0) {
+  setTimeout(() => {
+    const stompClient = context.getters.getStompClient;
+    tries = (tries || 0) + 1;
+
+    if (stompClient.connected) {
+      stompClient.send(args.destination, args.body, args.headers);
+    } else if (tries < 5) {
+      stompSend(context, args, tries);
+    }
+  }, 1500);
+}
+
+export function send(context, args) {
+  stompSend(context, args);
+}
