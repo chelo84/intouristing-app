@@ -11,6 +11,7 @@ module.exports = function (ctx) {
       'i18n',
       'axios',
       'stomp',
+      'alert',
     ],
 
     css: [
@@ -39,11 +40,13 @@ module.exports = function (ctx) {
       components: [
         'QAjaxBar',
         'QAvatar',
+        'QBar',
         'QBtn',
         'QCard',
         'QCardActions',
         'QCardSection',
         'QCheckbox',
+        'QDialog',
         'QDrawer',
         'QForm',
         'QHeader',
@@ -60,16 +63,24 @@ module.exports = function (ctx) {
         'QScrollArea',
         'QSelect',
         'QSeparator',
+        'QSpace',
+        'QSpinner',
+        'QSpinnerBall',
+        'QSpinnerBars',
+        'QSpinnerDots',
         'QToolbar',
-        'QToolbarTitle'
+        'QToolbarTitle',
+        'QTooltip'
       ],
 
       directives: [
+        'ClosePopup',
         'Ripple'
       ],
 
       // Quasar plugins
       plugins: [
+        'Dialog',
         'Loading',
         'LocalStorage',
         'Meta',

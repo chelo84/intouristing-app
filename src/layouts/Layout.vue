@@ -108,11 +108,41 @@ export default {
   async mounted() {
     await this.$store.dispatch('stomp/connect');
     console.log(this.$store.getters['stomp/getStompClient']);
+
+    const OPTIONS = { enableHighAccuracy: true, timeout: 5000, maximumAge: Infinity };
+    if ('geolocation' in navigator) {
+      navigator.geolocation.watchPosition((position) => {
+        console.log(position);
+        if (!this.isUpdated) {
+          const headers = this.$getStompHeaders();
+          const userPosition = {
+            user: this.userId,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+          headers.id = `${this.user.username}-update-position`;
+
+          this.$store.dispatch(
+            'stomp/send',
+            {
+              destination: '/ws/update-position',
+              body: JSON.stringify(userPosition),
+              headers,
+            },
+          );
+        }
+      }, error => console.error(error),
+      OPTIONS);
+    }
   },
   data() {
     return {
       drawer: false,
       miniState: true,
+      user: {
+        id: this.$store.getters['auth/getAccount'].id,
+        username: this.$store.getters['auth/getAccount'].username,
+      },
     };
   },
   computed: {

@@ -76,6 +76,7 @@
 export default {
   name: 'Login',
   data() {
+    console.log(this.$q.localStorage.getItem('accessToken'));
     return {
       username: this.$q.localStorage.getItem('rememberUsername') || '',
       password: '',
@@ -102,6 +103,7 @@ export default {
         password: this.password,
       }).then((resp) => {
         this.$q.localStorage.set('accessToken', resp.headers.authorization);
+        console.log(this.$q.localStorage.getItem('accessToken'));
         this.$store.commit('auth/login');
 
         if (this.remember) {
