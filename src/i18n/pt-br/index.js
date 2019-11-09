@@ -24,9 +24,12 @@ export default {
   remember: 'Lembrar',
   wrongUsernameOrPassword: 'Nome de usuário ou senha incorretos',
   loginFailed: 'Falha no login',
-  search: 'Procurar',
+  search: 'Buscar',
   change: 'Trocar',
   save: 'Salvar',
   saved: 'Salvo',
+  cancel: 'Cancelar',
+  searchCancelled: 'Busca cancelada',
+  searching: 'Buscando',
 
 };

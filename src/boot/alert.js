@@ -7,6 +7,25 @@ export default async ({ Vue }) => {
       icon: 'report_problem',
     });
   };
-
   Vue.prototype.$errorAlert = showErrorAlert;
+
+  const showInfoAlert = (message) => {
+    Vue.prototype.$q.notify({
+      color: 'info',
+      position: 'top',
+      message,
+      icon: 'info',
+    });
+  };
+  Vue.prototype.$infoAlert = showInfoAlert;
+
+  const showWarningAlert = (message) => {
+    Vue.prototype.$q.notify({
+      color: 'warning',
+      position: 'top',
+      message,
+      icon: 'priority_high',
+    });
+  };
+  Vue.prototype.$warningAlert = showWarningAlert;
 };

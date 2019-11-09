@@ -60,16 +60,14 @@ function connectAndReconnect(context, connectionId) {
           });
         },
         (error) => {
-          console.error(error);
-
           setTimeout(() => {
             if (connectionId === context.getters.getConnectionId) {
               connectAndReconnect(context, connectionId);
             }
-          }, 5000);
-          // if (error && typeof error === 'object') {
-          // console.error(error.headers ? error.headers.message : 'Something went wrong');
-          // }
+          }, 10000);
+          if (error && typeof error === 'object') {
+            console.error(error.headers ? error.headers.message : 'Something went wrong');
+          }
         },
       );
 
@@ -110,6 +108,10 @@ export function subscribe(context, args) {
 
 export function startSearch(context) {
   context.commit('START_SEARCH');
+}
+
+export function cancelSearch(context) {
+  context.commit('CANCEL_SEARCH');
 }
 
 export function incrementSearchCounter(context) {

@@ -28,6 +28,10 @@ export function START_SEARCH(state) {
   };
 }
 
+export function CANCEL_SEARCH(state) {
+  state.search.cancelled = true;
+}
+
 export function FINISH_SEARCH(state) {
   state.search.finished = true;
 }

@@ -28,4 +28,7 @@ export default {
   change: 'Change',
   save: 'Save',
   saved: 'Saved',
+  cancel: 'Cancel',
+  searchCancelled: 'Search cancelled',
+  searching: 'Searching',
 };
