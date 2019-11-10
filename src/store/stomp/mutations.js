@@ -21,7 +21,7 @@ export function UNSUBSCRIBE(state, subscription) {
 
 export function START_SEARCH(state) {
   state.search = {
-    counter: 0,
+    counter: 1,
     finished: false,
     cancelled: false,
     result: [],

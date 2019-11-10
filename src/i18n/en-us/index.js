@@ -31,4 +31,5 @@ export default {
   cancel: 'Cancel',
   searchCancelled: 'Search cancelled',
   searching: 'Searching',
+  radiusOfMeters: 'Radius of {distance}m',
 };

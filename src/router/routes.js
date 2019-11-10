@@ -45,7 +45,7 @@ const routes = [
     component: () => import('layouts/Layout.vue'),
     children: [
       { path: '', redirect: '/search' },
-      { path: 'search', component: () => import('pages/Search.vue') },
+      { path: 'search', component: () => import('pages/search/Search.vue') },
       { path: 'edit-profile', component: () => import('pages/EditProfile.vue') },
     ],
   },

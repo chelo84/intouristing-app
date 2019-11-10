@@ -16,6 +16,14 @@
     font-size: 12px;
     color: red;;
   }
+
+  .found-user {
+    padding: 14px;
+  }
+  .found-user:hover {
+    background-color: #4b367b2e;
+    cursor: pointer;
+  }
 </style>
 
 <template>
@@ -38,18 +46,64 @@
         @click="onSearchBtnClick"
         :label="searchBtnText"
         >
-        <small
-          :class="isSearching ? 'search-cancel-text' : 'hidden'"
-          >
+        <small :class="isSearching ? 'search-cancel-text' : 'hidden'">
           {{ $t('cancel') }}
         </small>
         <q-spinner-dots
           ref="search-loading"
           color="dark-purple"
           size="1em"
-          :class="isSearching ? 'search-spinner' : 'hidden'"/>
+          :class="isSearching ? 'search-spinner' : 'hidden'"
+        />
       </q-btn>
     </div>
+
+    <q-dialog
+      v-model="dialog"
+      persistent
+      :maximized="true"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
+      <q-card class="">
+        <q-bar class="bg-dark-purple">
+          <q-space/>
+
+          <q-btn dense flat icon="close" text-color="white" v-close-popup>
+            <q-tooltip content-class="bg-dark-purple text-white">Close</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section>
+          <div class="text-h6">;Users found</div>
+        </q-card-section>
+
+        <q-card-section class="found-user" v-for="user in foundUsers" v-bind:key="user.id">
+          <div class="flex">
+            <div ref="userImg" >
+              <q-avatar size="60px">
+                <q-img
+                  :src="avatarUrl + user.id"
+                  spinner-color="accent"
+                  class="fit"
+                  ref="avatarImg"
+                >
+                  <template v-slot:error>
+                    <div class="absolute-full text-white" style="padding: 0;">
+                      <q-icon name="account_circle" style="font-size: 60px;"/>
+                    </div>
+                  </template>
+                </q-img>
+              </q-avatar>
+            </div>
+            <div ref="userName" class="q-pl-lg row">
+              <span class="text-bold col-12">{{ user.name + ' ' + user.lastName }}</span>
+              <span class=col-12>{{ $t('radiusOfMeters', { distance: user.distance }) }} </span>
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -80,6 +134,9 @@ export default {
       searchBtnColor: 'dark-purple',
       searchBtnTextColor: 'white',
       searchBtnText: this.$t('search'),
+      dialog: false,
+      avatarUrl: `${process.env.API_URL}users/avatar/`,
+      foundUsers: [this.$store.getters['auth/getAccount']],
     };
   },
   methods: {
@@ -109,7 +166,7 @@ export default {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
           console.log(position);
-          const searchDelay = 2000;
+          const searchDelay = 500;
           const headers = this.$getStompHeaders();
           headers.id = `${this.user.username}-search`;
 
@@ -145,6 +202,8 @@ export default {
                   this.$infoAlert(this.$t('Search finished'));
                   this.isSearching = false;
                   this.$_updateBtnStyle();
+                  this.foundUsers = context.getters.getSearch.result;
+                  this.dialog = true;
                   // const UserListClass = Vue.extend(UserList);
                   // this.userList = new UserListClass({
                   //   propsData: {
