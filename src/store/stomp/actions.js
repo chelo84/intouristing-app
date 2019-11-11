@@ -8,7 +8,7 @@ function stompSubscribe(context, args) {
 
   const subscription = stompClient.subscribe(
     args.destination,
-    resp => args.callback(resp, context),
+    args.callback && typeof args.callback === 'function' ? resp => args.callback(resp, context) : null,
     args.headers,
   );
   context.commit('SUBSCRIBE', { name: args.name, subscription });
@@ -18,7 +18,7 @@ function stompSubscribe(context, args) {
   }
 }
 
-function connectAndReconnect(context, connectionId) {
+function connectAndReconnect(context, connectionId, callbackAfterConnection) {
   const accessToken = LocalStorage.getItem('accessToken');
   if (accessToken) {
     let stompClient = context.getters['stomp/getStompClient'];
@@ -32,9 +32,8 @@ function connectAndReconnect(context, connectionId) {
 
       stompClient.connect(
         headers,
-        (resp) => {
+        (/* resp */) => {
         // const respHeaders = resp.headers;
-          console.log(resp.headers);
           const subHeaders = headers;
           const { username } = context.rootState.auth.account;
 
@@ -42,10 +41,6 @@ function connectAndReconnect(context, connectionId) {
           stompSubscribe(context, {
             name: 'searchCancel',
             destination: '/user/queue/search/cancel',
-            callback: (message) => {
-              console.log('/search/cancel');
-              console.log(message);
-            },
             subHeaders,
           });
 
@@ -53,11 +48,14 @@ function connectAndReconnect(context, connectionId) {
             name: 'error',
             destination: '/user/queue/error',
             callback: (error) => {
-              console.log('/error');
-              console.log(error);
+              console.error(error);
             },
             subHeaders,
           });
+
+          if (callbackAfterConnection && typeof callbackAfterConnection === 'function') {
+            callbackAfterConnection();
+          }
         },
         (error) => {
           setTimeout(() => {
@@ -82,23 +80,20 @@ function stompSend(context, args, tries = 0) {
     tries = (tries || 0) + 1;
 
     if (stompClient.connected) {
-      stompClient.send(args.destination, args.body, args.headers);
+      stompClient.send(args.destination, JSON.stringify(args.body), args.headers);
     } else if (tries < 5) {
       stompSend(context, args, tries);
     }
   }, 1500);
 }
 
-export async function connect(context) {
-  console.log('stomp/connect');
-
+export async function connect(context, callbackAfterConnection) {
   context.commit('SET_CONNECTION_ID', uid());
 
-  connectAndReconnect(context, context.getters.getConnectionId);
+  connectAndReconnect(context, context.getters.getConnectionId, callbackAfterConnection);
 }
 
 export function send(context, args) {
-  console.log(args.destination);
   stompSend(context, args);
 }
 

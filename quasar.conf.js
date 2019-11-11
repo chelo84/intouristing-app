@@ -40,8 +40,10 @@ module.exports = function (ctx) {
       components: [
         'QAjaxBar',
         'QAvatar',
+        'QBadge',
         'QBar',
         'QBtn',
+        'QBtnDropdown',
         'QCard',
         'QCardActions',
         'QCardSection',
@@ -58,6 +60,7 @@ module.exports = function (ctx) {
         'QItemSection',
         'QLayout',
         'QList',
+        'QMenu',
         'QPage',
         'QPageContainer',
         'QScrollArea',
@@ -68,6 +71,7 @@ module.exports = function (ctx) {
         'QSpinnerBall',
         'QSpinnerBars',
         'QSpinnerDots',
+        'QToggle',
         'QToolbar',
         'QToolbarTitle',
         'QTooltip'

@@ -31,5 +31,11 @@ export default {
   cancel: 'Cancel',
   searchCancelled: 'Search cancelled',
   searching: 'Searching',
-  radiusOfMeters: 'Radius of {distance}m',
+  distanceOf: 'distance of {distance}',
+  usersFound: 'Users found',
+  sendRequest: 'Send request',
+  permissionGeolocationRequired: 'Permission for geolocation is required!',
+  browserNotSupported: 'Browser/device not supported!',
+  requestSent: 'Request sent',
+  thereAreNewNotifications: 'There are new notifications',
 };

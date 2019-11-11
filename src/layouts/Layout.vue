@@ -1,8 +1,43 @@
+<style scoped>
+
+  .notification-user-name {
+    margin: auto 0 auto 0;
+  }
+
+</style>
+
 <template>
     <q-layout view="hHh Lpr lff"  class="shadow-2 rounded-borders">
       <q-header elevated class="dark-purple">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+
+          <q-toolbar-title/>
+
+          <q-btn flat round dense icon="mdi-bell" @click="fetchNotificationList">
+            <q-badge floating color="red" :label="notificationCount"/>
+
+            <q-menu>
+              <div class="row no-wrap q-pa-md"
+                v-for="notification in notificationList"
+                v-bind:key="notification.id">
+
+                <div class="col-9">
+                  <!-- <div class="text-subtitle2 q-mb-md">Settings</div> -->
+                  <div class="text-subtitle2 notification-user-name">
+                    {{ `${notification.senderName} ${notification.senderLastName}` }}
+                  </div>
+                </div>
+
+                <q-separator vertical inset class="q-mx-xs" />
+
+                <div class="col-2 items-right q-ml-xs">
+                  <q-btn round color="positive" icon="mdi-check" size="xs"/>
+                  <q-btn round class="q-mt-md" color="negative" icon="mdi-close" size="xs"/>
+                </div>
+              </div>
+            </q-menu>
+          </q-btn>
         </q-toolbar>
       </q-header>
 
@@ -46,42 +81,6 @@
 
             <q-separator />
 
-            <q-item clickable v-ripple to="#">
-              <q-item-section avatar>
-                <q-icon name="star" />
-              </q-item-section>
-
-              <q-item-section>
-                Star
-              </q-item-section>
-            </q-item>
-
-            <q-separator />
-
-            <q-item clickable v-ripple to="#">
-              <q-item-section avatar>
-                <q-icon name="send" />
-              </q-item-section>
-
-              <q-item-section>
-                Send
-              </q-item-section>
-            </q-item>
-
-            <q-separator />
-
-            <q-item clickable v-ripple to="#">
-              <q-item-section avatar>
-                <q-icon name="drafts" />
-              </q-item-section>
-
-              <q-item-section>
-                Drafts
-              </q-item-section>
-            </q-item>
-
-            <q-separator />
-
             <q-item clickable v-ripple @click="logout" to="#">
               <q-item-section avatar>
                 <q-icon name="logout" />
@@ -101,20 +100,39 @@
     </q-page-container>
 
     </q-layout>
+
 </template>
 
 <script>
 export default {
-  async mounted() {
-    await this.$store.dispatch('stomp/connect');
-    console.log(this.$store.getters['stomp/getStompClient']);
+  created() {
+    console.log('CREATED');
 
-    const OPTIONS = { enableHighAccuracy: true, timeout: 5000, maximumAge: Infinity };
+    const headers = this.$getStompHeaders();
+    headers.id = `${this.user.username}-search`;
+    const requestCallback = (message) => {
+      console.log(message);
+
+      this.notificationCount = typeof this.notificationCount === 'number' ? this.notificationCount + 1 : 1;
+      this.$infoAlert(this.$t('thereAreNewNotifications'), { position: 'bottom-right' });
+    };
+    const callbackAfterConnectionIsEstablished = () => {
+      this.$store.dispatch(
+        'stomp/subscribe',
+        {
+          destination: '/user/queue/request',
+          callback: requestCallback,
+          headers,
+        },
+      );
+    };
+    this.$store.dispatch('stomp/connect', callbackAfterConnectionIsEstablished);
+
+    const OPTIONS = { enableHighAccuracy: false, timeout: 10000, maximumAge: Infinity };
     if ('geolocation' in navigator) {
-      navigator.geolocation.watchPosition((position) => {
-        console.log(position);
+      const watchPositionCallback = (position) => {
+        console.log('Position found');
         if (!this.isUpdated) {
-          const headers = this.$getStompHeaders();
           const userPosition = {
             user: this.userId,
             latitude: position.coords.latitude,
@@ -126,14 +144,28 @@ export default {
             'stomp/send',
             {
               destination: '/ws/update-position',
-              body: JSON.stringify(userPosition),
+              body: userPosition,
               headers,
             },
           );
         }
-      }, error => console.error(error),
-      OPTIONS);
+      };
+      const watchPosition = () => {
+        navigator.geolocation.watchPosition(
+          watchPositionCallback,
+          (error) => {
+            console.error(error);
+            watchPosition();
+          },
+          OPTIONS,
+        );
+      };
+      watchPosition();
     }
+
+    this.$axios.get('requests/count').then((resp) => {
+      this.notificationCount = resp.data || 0;
+    });
   },
   data() {
     return {
@@ -143,6 +175,8 @@ export default {
         id: this.$store.getters['auth/getAccount'].id,
         username: this.$store.getters['auth/getAccount'].username,
       },
+      notificationCount: 0,
+      notificationList: this.fetchNotifications,
     };
   },
   computed: {
@@ -157,6 +191,13 @@ export default {
     logout() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
+    },
+    fetchNotificationList() {
+      this.$axios.get('requests').then((resp) => {
+        this.notificationList = resp.data;
+        console.log(this.notificationList[0]);
+      });
+      console.log(this.notificationList);
     },
   },
 };

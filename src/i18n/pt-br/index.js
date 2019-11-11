@@ -31,5 +31,11 @@ export default {
   cancel: 'Cancelar',
   searchCancelled: 'Busca cancelada',
   searching: 'Buscando',
-  radiusOfMeters: 'Raio de {distance}m',
+  distanceOf: '{distance} de distância',
+  usersFound: 'Usuários encontrados',
+  sendRequest: 'Enviar convite',
+  permissionGeolocationRequired: 'Permissão de geolocalização é necessária!',
+  browserNotSupported: 'Navegador/dispositivo não suportado!',
+  requestSent: 'Convite enviado',
+  thereAreNewNotifications: 'Existem novas notificações',
 };

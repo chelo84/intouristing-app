@@ -155,11 +155,8 @@ export default {
 
       // Mock position
       this.user.userPosition = {
-        latitude: 3.2223,
-        longitude: 21.223,
-        accuracy: 2.232,
-        speed: 33.33,
-        heading: 99.82,
+        latitude: 0,
+        longitude: 0,
       };
 
       this.$axios.post(

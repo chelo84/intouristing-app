@@ -159,7 +159,7 @@ export default {
     updateToken() {
       this.$axios.get('users/token/update').then((resp) => {
         this.$q.localStorage.set('accessToken', resp.data);
-        console.log(this.$store.commit('auth/login'));
+        this.$store.commit('auth/login');
       });
     },
   },

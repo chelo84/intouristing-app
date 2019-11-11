@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 export function checkAuth(context) {
   const account = context.getters.getAccount;
-  const accessToken = String(LocalStorage.getItem('accessToken'));
+  const accessToken = LocalStorage.getItem('accessToken');
   const expDate = accessToken ? jwt.decode(accessToken.replace('Bearer ', '')).exp : null;
   const tokenIsExpired = expDate && expDate < Date.now() / 1000;
   /*
@@ -19,5 +19,5 @@ export function checkAuth(context) {
 
 export function logout(context) {
   context.commit('logout');
-  context.rootState.stomp.stompClient.disconnect(() => console.log('WebSocket disconnected'));
+  context.rootState.stomp.stompClient.disconnect(() => console.debug('WebSocket disconnected'));
 }
