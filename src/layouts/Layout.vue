@@ -17,16 +17,22 @@
           <q-btn flat round dense icon="mdi-bell" @click="fetchNotificationList">
             <q-badge floating color="red" :label="notificationCount"/>
 
-            <q-menu>
+            <q-menu anchor="bottom right">
               <div class="row no-wrap q-pa-md"
                 v-for="notification in notificationList"
                 v-bind:key="notification.id">
 
                 <div class="col-9">
-                  <!-- <div class="text-subtitle2 q-mb-md">Settings</div> -->
                   <div class="text-subtitle2 notification-user-name">
                     {{ `${notification.senderName} ${notification.senderLastName}` }}
                   </div>
+                  <q-btn
+                    rounded
+                    disable
+                    class="disabled bg-primary text-white q-mt-sm"
+                    size="sm"
+                    :label="$t('viewProfile')"
+                  />
                 </div>
 
                 <q-separator vertical inset class="q-mx-xs" />
@@ -128,7 +134,7 @@ export default {
     };
     this.$store.dispatch('stomp/connect', callbackAfterConnectionIsEstablished);
 
-    const OPTIONS = { enableHighAccuracy: false, timeout: 10000, maximumAge: Infinity };
+    const OPTIONS = { enableHighAccuracy: true, timeout: 10000, maximumAge: Infinity };
     if ('geolocation' in navigator) {
       const watchPositionCallback = (position) => {
         console.log('Position found');
@@ -166,6 +172,10 @@ export default {
     this.$axios.get('requests/count').then((resp) => {
       this.notificationCount = resp.data || 0;
     });
+    this.$axios.get('requests').then((resp) => {
+      this.notificationList = resp.data;
+      console.log(this.notificationList[0]);
+    });
   },
   data() {
     return {
@@ -197,7 +207,6 @@ export default {
         this.notificationList = resp.data;
         console.log(this.notificationList[0]);
       });
-      console.log(this.notificationList);
     },
   },
 };

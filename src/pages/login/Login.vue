@@ -115,7 +115,7 @@ export default {
         this.$q.notify({
           color: 'negative',
           position: 'top',
-          message: error.response.status === 403 ? this.$t('wrongUsernameOrPassword') : this.$t('loginFailed'),
+          message: error.response && error.response.status === 403 ? this.$t('wrongUsernameOrPassword') : this.$t('loginFailed'),
           icon: 'report_problem',
         });
       }).then(() => {

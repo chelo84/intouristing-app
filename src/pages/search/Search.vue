@@ -93,7 +93,7 @@
         <q-card-section v-if="!foundUsers || foundUsers.length === 0">
           <div class="text-h5 text-center text-primary">
             <q-icon name="mdi-package-variant"/>
-            No user found
+            {{ $t('noUserFound') }}
           </div>
         </q-card-section>
         <q-card-section class="users-section q-gutter-y-md bg-white">
