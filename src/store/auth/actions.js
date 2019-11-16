@@ -1,5 +1,6 @@
 import { LocalStorage } from 'quasar';
 import jwt from 'jsonwebtoken';
+import Vue from 'vue';
 
 export function checkAuth(context) {
   const account = context.getters.getAccount;
@@ -19,5 +20,7 @@ export function checkAuth(context) {
 
 export function logout(context) {
   context.commit('logout');
-  context.rootState.stomp.stompClient.disconnect(() => console.debug('WebSocket disconnected'));
+  context.rootState.stomp.stompClient.disconnect(() => {
+    Vue.set(context.rootState.stomp, 'stompClient', null);
+  });
 }

@@ -24,22 +24,37 @@
 
                 <div class="col-9">
                   <div class="text-subtitle2 notification-user-name">
-                    {{ `${notification.senderName} ${notification.senderLastName}` }}
+                    {{ `${notification.sender.name} ${notification.sender.lastName}` }}
                   </div>
                   <q-btn
                     rounded
-                    disable
-                    class="disabled bg-primary text-white q-mt-sm"
+                    class="bg-primary text-white q-mt-sm"
                     size="sm"
-                    :label="$t('viewProfile')"
+                    @click="showProfile(notification)"
+                    :label="$t('profile')"
                   />
                 </div>
 
                 <q-separator vertical inset class="q-mx-xs" />
 
                 <div class="col-2 items-right q-ml-xs">
-                  <q-btn round color="positive" icon="mdi-check" size="xs"/>
-                  <q-btn round class="q-mt-md" color="negative" icon="mdi-close" size="xs"/>
+                  <q-btn
+                    round
+                    color="positive"
+                    @click="acceptRequest(notification.id)"
+                    icon="mdi-check"
+                    size="xs"
+                    v-close-popup
+                  />
+                  <q-btn
+                    round
+                    class="q-mt-md"
+                    @click="declineRequest(notification.id)"
+                    color="negative"
+                    icon="mdi-close"
+                    size="xs"
+                    v-close-popup
+                  />
                 </div>
               </div>
             </q-menu>
@@ -105,15 +120,27 @@
       <router-view />
     </q-page-container>
 
+    <user-profile-card
+      ref="profileCard"
+      :is-request="true"
+      :notification="currNotification ? currNotification.id : undefined"
+      @acceptRequest="acceptRequest"
+      @declineRequest="declineRequest"
+      :user="currNotification ? currNotification.sender : undefined"
+    />
+
     </q-layout>
 
 </template>
 
 <script>
-export default {
-  created() {
-    console.log('CREATED');
+import UserProfileCard from '../components/UserProfileCard';
 
+export default {
+  components: {
+    UserProfileCard,
+  },
+  created() {
     const headers = this.$getStompHeaders();
     headers.id = `${this.user.username}-search`;
     const requestCallback = (message) => {
@@ -137,8 +164,9 @@ export default {
     const OPTIONS = { enableHighAccuracy: true, timeout: 10000, maximumAge: Infinity };
     if ('geolocation' in navigator) {
       const watchPositionCallback = (position) => {
-        console.log('Position found');
         if (!this.isUpdated) {
+          console.log('Position found');
+          setTimeout(() => { this.isUpdated = false; }, 3000);
           const userPosition = {
             user: this.userId,
             latitude: position.coords.latitude,
@@ -154,10 +182,11 @@ export default {
               headers,
             },
           );
+          this.isUpdated = true;
         }
       };
       const watchPosition = () => {
-        navigator.geolocation.watchPosition(
+        this.watchId = navigator.geolocation.watchPosition(
           watchPositionCallback,
           (error) => {
             console.error(error);
@@ -168,16 +197,9 @@ export default {
       };
       watchPosition();
     }
-
-    this.$axios.get('requests/count').then((resp) => {
-      this.notificationCount = resp.data || 0;
-    });
-    this.$axios.get('requests').then((resp) => {
-      this.notificationList = resp.data;
-      console.log(this.notificationList[0]);
-    });
   },
   data() {
+    this.fetchNotificationList();
     return {
       drawer: false,
       miniState: true,
@@ -187,6 +209,9 @@ export default {
       },
       notificationCount: 0,
       notificationList: this.fetchNotifications,
+      currNotification: Object,
+      isUpdated: false,
+      watchId: null,
     };
   },
   computed: {
@@ -199,14 +224,42 @@ export default {
   },
   methods: {
     logout() {
+      navigator.geolocation.clearWatch(this.watchId);
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     },
     fetchNotificationList() {
+      this.$axios.get('requests/count').then((resp) => {
+        this.notificationCount = resp.data || 0;
+      });
       this.$axios.get('requests').then((resp) => {
         this.notificationList = resp.data;
         console.log(this.notificationList[0]);
       });
+    },
+    showProfile(notification) {
+      this.currNotification = notification;
+      console.log(this.currNotification);
+      this.$refs.profileCard.openCard();
+    },
+    acceptRequest(notificationId) {
+      this.answerRequest('accept-request', notificationId);
+    },
+    declineRequest(notificationId) {
+      this.answerRequest('decline-request', notificationId);
+    },
+    answerRequest(destination, notificationId) {
+      const headers = this.$getStompHeaders();
+      headers.id = `${this.user.username}-${destination}`;
+      this.$store.dispatch(
+        'stomp/send',
+        {
+          destination: `/ws/${destination}`,
+          body: notificationId,
+          headers,
+        },
+      );
+      this.notificationCount -= 1;
     },
   },
 };

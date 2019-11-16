@@ -38,6 +38,8 @@ export default {
   browserNotSupported: 'Navegador/dispositivo não suportado!',
   requestSent: 'Convite enviado',
   thereAreNewNotifications: 'Existem novas notificações',
-  viewProfile: 'Ver perfil',
+  profile: 'Perfil',
   noUserFound: 'Nenhum usuário encontrado',
+  accept: 'Aceitar',
+  decline: 'Recusar',
 };

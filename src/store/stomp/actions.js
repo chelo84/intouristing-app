@@ -79,7 +79,7 @@ function stompSend(context, args, tries = 0) {
     const stompClient = context.getters.getStompClient;
     tries = (tries || 0) + 1;
 
-    if (stompClient.connected) {
+    if (stompClient && stompClient.connected) {
       stompClient.send(args.destination, JSON.stringify(args.body), args.headers);
     } else if (tries < 5) {
       stompSend(context, args, tries);

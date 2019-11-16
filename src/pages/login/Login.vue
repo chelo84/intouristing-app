@@ -104,6 +104,8 @@ export default {
         this.$q.localStorage.set('accessToken', resp.headers.authorization);
         this.$store.commit('auth/login');
 
+        this.$axios.defaults.headers.common.Authorization = this.$q.localStorage.getItem('accessToken');
+
         if (this.remember) {
           this.$q.localStorage.set('rememberUsername', this.username);
         } else {

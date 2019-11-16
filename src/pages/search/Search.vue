@@ -122,7 +122,7 @@
               <div class="q-pl-lg col-6 row">
                 <span class="text-bold col-12">{{ user.name + ' ' + user.lastName }}</span>
                 <span class=col-12>
-                  {{ $t('distanceOf', { distance: getDistance(user.distance) }) }}
+                  {{ $t('distanceOf', { distance: this.$toDistance(user.distance) }) }}
                 </span>
               </div>
 
@@ -265,9 +265,6 @@ export default {
       } else {
         this.$errorAlert(this.$t('browserNotSupported'));
       }
-    },
-    getDistance(distance) {
-      return Math.abs(distance) > 999 ? `${Math.sign(distance) * ((Math.abs(distance) / 1000).toFixed(1))}km` : `${Math.sign(distance) * Math.abs(distance)}m`;
     },
     sendFriendRequest(userToSend) {
       const $button = this.$refs[`button${userToSend.id}`][0].$el;
