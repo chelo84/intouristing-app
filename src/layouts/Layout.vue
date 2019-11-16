@@ -15,7 +15,12 @@
           <q-toolbar-title/>
 
           <q-btn flat round dense icon="mdi-bell" @click="fetchNotificationList">
-            <q-badge floating color="red" :label="notificationCount"/>
+            <q-badge
+              floating
+              color="red"
+              :label="notificationCount"
+              v-show="notificationCount > 0"
+            />
 
             <q-menu anchor="bottom right">
               <div class="row no-wrap q-pa-md"
