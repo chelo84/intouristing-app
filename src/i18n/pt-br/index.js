@@ -42,4 +42,11 @@ export default {
   noUserFound: 'Nenhum usuário encontrado',
   accept: 'Aceitar',
   decline: 'Recusar',
+  friend: 'Amigo | Amigos',
+  year: 'Ano | Anos',
+  month: 'Mês | Meses',
+  day: 'Dia | Dias',
+  second: 'Segundo | Segundos',
+  minute: 'Minuto | Minutos',
+  timeAgo: 'Há {quantity} {unit}',
 };

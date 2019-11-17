@@ -46,6 +46,7 @@ const routes = [
     children: [
       { path: '', redirect: '/search' },
       { path: 'search', component: () => import('pages/search/Search.vue') },
+      { path: 'chat', component: () => import('pages/chat/Chat.vue') },
       { path: 'edit-profile', component: () => import('pages/EditProfile.vue') },
     ],
   },

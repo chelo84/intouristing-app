@@ -42,4 +42,11 @@ export default {
   noUserFound: 'No user found',
   accept: 'Accept',
   decline: 'Decline',
+  friend: 'Friend | Friends',
+  year: 'Year | Years',
+  month: 'Month | Months',
+  day: 'Day | Days',
+  second: 'Second | Seconds',
+  minute: 'Minute | Minutes',
+  timeAgo: '{quantity} {unit} ago',
 };

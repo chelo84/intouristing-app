@@ -78,7 +78,7 @@
         :width="200"
         :breakpoint="500"
         bordered
-        content-class="bg-grey-3"
+        content-class="bg-white"
       >
         <q-scroll-area class="fit">
           <q-list padding>
@@ -90,6 +90,16 @@
 
               <q-item-section>
                 {{ $t('search') }}
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/chat">
+              <q-item-section avatar>
+                <q-icon name="mdi-comment-text" />
+              </q-item-section>
+
+              <q-item-section>
+                Chat
               </q-item-section>
             </q-item>
 
@@ -121,7 +131,7 @@
         </q-scroll-area>
       </q-drawer>
 
-      <q-page-container>
+      <q-page-container class="bg-deep-purple-1">
       <router-view />
     </q-page-container>
 

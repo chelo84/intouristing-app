@@ -90,7 +90,10 @@
           <div class="text-h6 text-center text-primary">{{ $t('usersFound') }}</div>
         </q-card-section>
 
-        <q-card-section v-if="!foundUsers || foundUsers.length === 0">
+        <q-card-section
+          class="users-section q-gutter-y-md bg-white"
+          v-if="!foundUsers || foundUsers.length === 0"
+        >
           <div class="text-h5 text-center text-primary">
             <q-icon name="mdi-package-variant"/>
             {{ $t('noUserFound') }}
@@ -122,7 +125,7 @@
               <div class="q-pl-lg col-6 row">
                 <span class="text-bold col-12">{{ user.name + ' ' + user.lastName }}</span>
                 <span class=col-12>
-                  {{ $t('distanceOf', { distance: this.$toDistance(user.distance) }) }}
+                  {{ $t('distanceOf', { distance: $toDistance(user.distance) }) }}
                 </span>
               </div>
 
