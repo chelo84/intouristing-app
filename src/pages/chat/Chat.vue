@@ -7,37 +7,43 @@
     >
       <q-list
         bordered
-        class="rounded-borders col-12 col-lg-4 full-height"
+        class="rounded-borders col-12 col-lg-3 full-height"
       >
         <q-item-label header>{{ $tc('friend', 2) }}</q-item-label>
 
           <q-item
             clickable
             v-ripple
-            @click="itemClick"
+            @click="friendSelect(friend)"
             v-for="friend in friendList"
             v-bind:key="friend.user.id"
+            :class="activeFriend === friend.user.id ? 'bg-grey-4' : ''"
           >
             <q-item-section avatar>
               <user-avatar :user-id="friend.user.id" size="48px"/>
             </q-item-section>
 
             <q-item-section>
-              <q-item-label lines="1">
+              <q-item-label class="text-weight-bold" lines="1">
                 {{ friend.user.name }} {{ friend.user.lastName }}
               </q-item-label>
-              <q-item-label caption lines="2">
+              <q-item-label
+                class="text-weight-bold text-grey-7"
+                caption
+                lines="2"
+                v-if="friend.lastMessage"
+              >
                 {{ friend.lastMessage.text }}
               </q-item-label>
             </q-item-section>
 
-            <q-item-section lines="2" side top>
-              <div>
+            <q-item-section lines="2" side bottom v-if="friend.lastMessage">
+              <q-item-label class="text-weight-bold" caption>
                 {{ $dateFromNow(friend.lastMessage.createdAt) }}
-              </div>
-              <div>
+              </q-item-label>
+              <q-item-label>
                 <q-icon name="style" size="xs"/>
-              </div>
+              </q-item-label>
             </q-item-section>
           </q-item>
 
@@ -46,7 +52,7 @@
       </q-list>
 
       <div
-        class="bg-black col-12 col-lg-8"
+        class="bg-grey-3 border col-12 col-lg-9"
         :class="!$q.platform.is.desktop ? 'hidden' : ''"
       >
 
@@ -72,11 +78,13 @@ export default {
   data() {
     return {
       friendList: [],
+      activeFriend: null,
     };
   },
   methods: {
-    itemClick() {
-      console.log('itemClick');
+    friendSelect(friend) {
+      this.activeFriend = friend.user.id;
+      console.log('friendSelect');
     },
   },
 };

@@ -279,7 +279,7 @@ export default {
           'stomp/send',
           {
             destination: '/ws/request',
-            body: { destinationId: userToSend.id },
+            body: { destination: { id: userToSend.id } },
             headers,
           },
         );

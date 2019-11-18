@@ -1,5 +1,5 @@
 <template>
-  <q-page class="full-width row justify-center  ">
+  <q-page class="full-width row justify-center">
 
     <q-ajax-bar
       ref="bar"
@@ -8,7 +8,7 @@
       size="10px"
     />
 
-    <div class="shadow-13 q-pa-lg q-ma-lg-lg col-12 col-md-6">
+    <div class="shadow-13 bg-white q-pa-lg q-ma-lg-lg col-12 col-md-6">
       <q-form @submit="onSubmit" class="q-gutter-sm">
         <div class="row flex flex-center q-mb-md">
           <q-avatar size="100px">
