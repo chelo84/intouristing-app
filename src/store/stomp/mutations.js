@@ -12,9 +12,9 @@ export function SUBSCRIBE(state, subscription) {
   }
 }
 
-export function UNSUBSCRIBE(state, subscription) {
-  const index = state.subscriptions.findIndex(sub => sub.name === subscription.name);
-  if (index !== 1) {
+export function UNSUBSCRIBE(state, subscriptionName) {
+  const index = state.subscriptions.findIndex(sub => sub.name === subscriptionName);
+  if (index !== -1) {
     state.subscriptions.splice(index, 1);
   }
 }

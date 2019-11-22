@@ -56,6 +56,7 @@ module.exports = function (ctx) {
         'QHeader',
         'QIcon',
         'QImg',
+        'QInfiniteScroll',
         'QInput',
         'QItem',
         'QItemLabel',
@@ -81,7 +82,8 @@ module.exports = function (ctx) {
 
       directives: [
         'ClosePopup',
-        'Ripple'
+        'Ripple',
+        'Scroll'
       ],
 
       // Quasar plugins
@@ -92,6 +94,7 @@ module.exports = function (ctx) {
         'Meta',
         'Notify',
         'Platform',
+        'Screen',
         'SessionStorage'
       ],
     },

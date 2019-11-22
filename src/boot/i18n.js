@@ -6,7 +6,7 @@ import { LocalStorage } from 'quasar';
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
-  locale: LocalStorage.getItem('locale'),
+  locale: LocalStorage.getItem('locale') || 'en-us',
   fallbackLocale: 'en-us',
   messages,
 });

@@ -3,19 +3,45 @@ import { LocalStorage, uid } from 'quasar';
 import SockJS from 'sockjs-client';
 import Stomp from 'webstomp-client';
 
-function stompSubscribe(context, args) {
+function doSubscribe(context, args, interval, tries) {
   const stompClient = context.getters.getStompClient;
+  if (tries <= 10
+      && context.getters.getStompClient.connected
+      && !context.getters.getSubscription(args.name)) {
+    const subscription = stompClient.subscribe(
+      args.destination,
+      args.callback && typeof args.callback === 'function' ? resp => args.callback(resp, context) : null,
+      args.headers,
+    );
+    context.commit('SUBSCRIBE', { name: args.name, subscription });
 
-  const subscription = stompClient.subscribe(
-    args.destination,
-    args.callback && typeof args.callback === 'function' ? resp => args.callback(resp, context) : null,
-    args.headers,
-  );
-  context.commit('SUBSCRIBE', { name: args.name, subscription });
-
-  if (args.afterSubscription && typeof args.afterSubscription === 'function') {
-    args.afterSubscription(context);
+    if (args.afterSubscription && typeof args.afterSubscription === 'function') {
+      args.afterSubscription(context);
+    }
+  } else if (tries > 5
+      || context.getters.getSubscription(args.name)) {
+    console.log(
+      `%c Finish subscription for [${args.name}] in [${tries}] tries`,
+      'color: #551a8b',
+    );
+    clearInterval(interval);
   }
+
+  return tries + 1;
+}
+
+function stompSubscribe(context, args) {
+  const stateSubscription = context.getters.getSubscription(args.name);
+
+  if (stateSubscription) {
+    context.commit('UNSUBSCRIBE', args.name);
+  }
+
+  let tries = 1;
+  const interval = setInterval(() => {
+    tries = doSubscribe(context, args, interval, tries);
+  }, 1000);
+  tries = doSubscribe(context, args, interval, tries);
 }
 
 function connectAndReconnect(context, connectionId, callbackAfterConnection) {
@@ -63,9 +89,7 @@ function connectAndReconnect(context, connectionId, callbackAfterConnection) {
               connectAndReconnect(context, connectionId);
             }
           }, 10000);
-          if (error && typeof error === 'object') {
-            console.error(error.headers ? error.headers.message : 'Something went wrong');
-          }
+          console.error(error);
         },
       );
 
@@ -79,8 +103,10 @@ function stompSend(context, args, tries = 0) {
     const stompClient = context.getters.getStompClient;
     tries = (tries || 0) + 1;
 
+    const payload = typeof args.body !== 'string' ? JSON.stringify(args.body) : args.body;
+
     if (stompClient && stompClient.connected) {
-      stompClient.send(args.destination, JSON.stringify(args.body), args.headers);
+      stompClient.send(args.destination, payload, args.headers);
     } else if (tries < 5) {
       stompSend(context, args, tries);
     }

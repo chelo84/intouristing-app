@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import auth from './auth';
 import stomp from './stomp';
+import chat from './chat';
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       auth,
       stomp,
+      chat,
     },
 
     // enable strict mode (adds overhead!)
