@@ -147,11 +147,11 @@
           reverse
           :scroll-target="$refs.chatContainer"
         >
-          <template v-slot:loading>
+          <!-- <template v-slot:loading>
             <div class="row justify-center q-my-md">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-          </template>
+          </template> -->
         </q-infinite-scroll>
       </div>
     </div>
