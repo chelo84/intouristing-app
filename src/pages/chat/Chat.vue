@@ -230,7 +230,7 @@ export default {
 
     this.$axios.get('relationships/friends').then((resp) => {
       this.friends = resp.data;
-      if (this.$q.platform.is.desktop) {
+      if (this.$q.platform.is.desktop && this.friends.length > 0) {
         this.friendSelect(this.friends[0]);
       }
     });
@@ -364,20 +364,22 @@ export default {
       }, 0);
     },
     updateMessages(additionalLimit, done, firstPassing) {
-      this.$axios.get(`chat/private/${this.user.id}/${this.activeFriend.id}/messages`,
-        { params: { limit: this.limit + (additionalLimit || 0) } }).then((resp) => {
-        this.messages = resp.data.messages.reverse();
-        this.limit = resp.data.limit;
+      if (this.activeFriend.id) {
+        this.$axios.get(`chat/private/${this.user.id}/${this.activeFriend.id}/messages`,
+          { params: { limit: this.limit + (additionalLimit || 0) } }).then((resp) => {
+          this.messages = resp.data.messages.reverse();
+          this.limit = resp.data.limit;
 
-        if (firstPassing) {
-          this.friends.find(f => f.user.id === this.activeFriend.id).unreadMessages = 0;
-          this.scrollChatToBottom();
-        }
-        if (this.messages.length === this.limit) {
-          this.$refs.chatContainerScroll.stop();
-        }
-        if (typeof done === 'function') done();
-      });
+          if (firstPassing) {
+            this.friends.find(f => f.user.id === this.activeFriend.id).unreadMessages = 0;
+            this.scrollChatToBottom();
+          }
+          if (this.messages.length === this.limit) {
+            this.$refs.chatContainerScroll.stop();
+          }
+          if (typeof done === 'function') done();
+        });
+      }
     },
     onLoad(index, done) {
       const firstPassing = !this.limit;
