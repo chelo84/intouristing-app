@@ -77,13 +77,13 @@ module.exports = function (ctx) {
         'QToggle',
         'QToolbar',
         'QToolbarTitle',
-        'QTooltip'
+        'QTooltip',
       ],
 
       directives: [
         'ClosePopup',
         'Ripple',
-        'Scroll'
+        'Scroll',
       ],
 
       // Quasar plugins
@@ -95,7 +95,7 @@ module.exports = function (ctx) {
         'Notify',
         'Platform',
         'Screen',
-        'SessionStorage'
+        'SessionStorage',
       ],
     },
 
