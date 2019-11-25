@@ -14,7 +14,11 @@
     "heroku-postbuild": "yarn && yarn build"
   },
   "dependencies": {
+    "@quasar/app": "^1.0.0",
+    "@quasar/quasar-app-extension-dotenv": "^1.0.0-beta.11",
     "@quasar/extras": "^1.0.0",
+    "electron": "^5.0.0",
+    "quasar-app-extension-qautomate": "^1.0.0-alpha.5",
     "axios": "^0.18.1",
     "connect-history-api-fallback": "^1.6.0",
     "cordova": "^9.0.0",
