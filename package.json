@@ -33,7 +33,7 @@
     "vue2-leaflet": "^2.2.1",
     "vue2-leaflet-movingmarker": "^0.0.1",
     "vuelidate": "^0.7.4",
-    "webstomp-client": "^1.2.6"
+    "webstomp-client": "^1.2.6",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
     "eslint-plugin-vue": "^5.0.0",
