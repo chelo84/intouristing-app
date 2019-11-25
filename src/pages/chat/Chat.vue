@@ -9,11 +9,13 @@
   }
 </style>
 
-<template ref="kka">
+<template>
     <q-page >
     <div
       class="bg-white row border-grey fit"
-      :style="`min-height: ${dom.divSize}px; max-height: ${dom.divSize}px;`"
+      style="min-height: 500px;"
+      :style="dom.divSize ?
+        `min-height: ${dom.divSize}px !important; max-height: ${dom.divSize}px !important;` : ''"
     >
       <q-list
         bordered
