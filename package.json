@@ -7,7 +7,6 @@
   "author": "Chelo84 <marcelo_lacroix@hotmail.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
     "build": "quasar build",
     "start": "node server.js",
