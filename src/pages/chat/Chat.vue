@@ -13,7 +13,7 @@
     <q-page >
     <div
       class="bg-white row border-grey fit"
-      style="min-height: 500px;"
+      style="min-height: 500px; max-height: 500px;"
       :style="dom.divSize ?
         `min-height: ${dom.divSize}px !important; max-height: ${dom.divSize}px !important;` : ''"
     >
@@ -105,10 +105,10 @@
         <div
           ref="chatContainer"
           class="self-center"
-          style="width: 100%; overflow-y: auto;"
+          style="width: 100%; overflow-y: auto; max-height: 500px;"
           :style="!$q.platform.is.desktop ?
-           `margin-bottom: 100px; max-height: ${dom.chatContainerHeight}px`
-           : `max-height: ${dom.chatContainerHeight}px`"
+           `margin-bottom: 100px; max-height: ${dom.chatContainerHeight}px !important;`
+           : `max-height: ${dom.chatContainerHeight}px !important;`"
         >
           <div
             v-for="(message, index) in messages"
