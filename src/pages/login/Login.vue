@@ -9,10 +9,8 @@
     />
 
     <div class="shadow-3 q-pa-lg" style="width: 440px; min-height: 500px;">
-      <div class="row flex flex-center login-img">
-        <img alt="Quasar logo"
-          src="~assets/quasar-logo-full.svg"
-          style="height: 180px;">
+      <div class="row flex flex-center login-img" style="height: 180px; margin-bottom: 20px;">
+        <user-avatar :user-id="username" size="180px"/>
       </div>
       <q-form
         @submit="onSubmit"
@@ -73,8 +71,13 @@
 </style>
 
 <script>
+import UserAvatar from '../../components/UserAvatar';
+
 export default {
   name: 'Login',
+  components: {
+    UserAvatar,
+  },
   data() {
     return {
       username: this.$q.localStorage.getItem('rememberUsername') || '',
