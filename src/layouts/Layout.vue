@@ -52,6 +52,7 @@
                     rounded
                     class="bg-primary text-white q-mt-sm"
                     size="sm"
+                    v-close-popup
                     @click="showProfile(notification)"
                     :label="$t('profile')"
                   />
